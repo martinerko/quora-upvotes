@@ -1,14 +1,15 @@
 {
   "name": "quora-upvotes",
   "version": "0.0.0",
-  "description": "CLI tool which outputs a list of all upvoted answers for given profile.",
+  "description": "Outputs a list of all upvoted answers for given profile.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "quora",
-    "upvote"
+    "upvoted",
+    "answers"
   ],
   "author": "martinerko <martinerko@gmail.com>",
   "license": "MIT",
