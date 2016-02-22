@@ -1,0 +1,43 @@
+#!/usr/bin/env node
+
+/*!
+ * quora-upvotes
+ * Copyright(c) 2016 martinerko <martinerko@gmail.com>
+ * MIT Licensed
+ */
+
+/**
+ * Module dependencies.
+ */
+
+var program = require('commander');
+var upvotedAnswers = require('../lib');
+
+program
+  .version(require('../package.json').version)
+  .option('-p, --profile <name>', 'profile name (required)')
+  .option('-m, --markdown', 'output result in Markdown format')
+  .parse(process.argv);
+
+if (!program.profile) {
+  program.help();
+} else {
+
+  upvotedAnswers(program.profile, function(err, data) {
+    if (err) {
+      console.error(err.message);
+      process.exit(1);
+    }
+    var md = program.markdown;
+    var contentTemplate = md ? '[%s](%s)\n' : '%s\n%s\n';
+    var log = console.log;
+
+    log(md ? '# %s [%s](%s)' : '%s %s\n%s\n', 'Upvoted answers by',
+      data.meta.title, data.meta.link);
+
+    data.items.forEach(function(upvoted) {
+      log(contentTemplate, upvoted.title, upvoted.link);
+    });
+    process.exit(0);
+  });
+}
